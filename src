@@ -1,0 +1,46 @@
+import React, { useState } from "react";
+
+const SEMESTRES = [
+  { nombre: "Semestre I", ramos: ["Biología Celular", "Anatomía", "Introducción a la TO"] },
+  { nombre: "Semestre II", ramos: ["Neuroanatomía", "Psicología General"] }
+];
+
+export default function App() {
+  const [estado, setEstado] = useState({});
+
+  const toggle = (ramo) => {
+    setEstado(prev => ({ ...prev, [ramo]: !prev[ramo] }));
+  }
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h1>Malla Interactiva</h1>
+      {SEMESTRES.map((sem, idx) => (
+        <div key={idx} style={{ border: "1px solid #aaa", padding: 12, marginBottom: 20 }}>
+          <h2>{sem.nombre}</h2>
+          <div style={{ display: "flex", gap: 10 }}>
+            {sem.ramos.map(ramo => {
+              const aprobado = estado[ramo];
+              return (
+                <div
+                  key={ramo}
+                  onClick={() => toggle(ramo)}
+                  style={{
+                    padding: 10,
+                    width: 150,
+                    textAlign: "center",
+                    cursor: "pointer",
+                    background: aprobado ? "#b388ff" : "#81d4fa",
+                    borderRadius: 8
+                  }}
+                >
+                  {ramo}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
